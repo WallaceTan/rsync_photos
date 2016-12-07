@@ -5,7 +5,6 @@ GOOGLE_PHOTOS_DIR=~/"Pictures/Google Photos Backup"
 # Current Directory
 CWD=$(pwd)
 
-
 # Script Directory
 SCRIPT_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
@@ -15,9 +14,10 @@ cd "${GOOGLE_PHOTOS_DIR}"
 
 # Get list of duplicate files
 #find . -iname "*-00?.JPG"
+#find . -iname "*-00?.MOV"
 
 # Whitespace-safe EXCEPT newlines
-find . -iname '*-00?.JPG' -print0 |
+find . -iname '*-00?.MOV' -print0 |
 while IFS= read -r -d $'\0' line; do
 	dup_file="${line}"
 	file_ext="${dup_file##*.}"
