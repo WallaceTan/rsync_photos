@@ -1,0 +1,21 @@
+rsync_sandisk32G
+wallace@wallace-mbp:~$ rsync -rvt --progress --include='MVI*.MOV' --exclude=* /Volumes/SANDISK32G/DCIM/100CANON/ ds:/volume1/Public/Shared_Pictures/Canon650/
+
+# diff multiple files
+/volume1/Public/Shared_Pictures/Canon650/2015-04/IMG_5660.JPG
+/volume1/Public/Shared_Pictures/Canon650/IMG_5660.JPG
+DiskStation> diff 2015-04/IMG_5660.JPG IMG_5660.JPG
+DiskStation> 
+for i in `seq 5660 5686`; do echo IMG_${i}.JPG; done
+for i in $(seq 5660 5686); do echo IMG_${i}.JPG; done
+cd /volume1/Public/Shared_Pictures/Canon650/
+for i in $(seq 5660 5686); do /bin/echo /usr/bin/diff IMG_${i}.JPG 2015-04/IMG_${i}.JPG; /usr/bin/diff IMG_${i}.JPG 2015-04/IMG_${i}.JPG; done
+
+# diff multiple files, delete same file
+for i in $(seq 5662 5686); do /bin/echo -n /usr/bin/diff IMG_${i}.JPG 2015-04/IMG_${i}.JPG; /usr/bin/diff IMG_${i}.JPG 2015-04/IMG_${i}.JPG > /dev/null 2>&1 && /bin/echo -n " - Same, Deleting..." && /bin/rm IMG_${i}.JPG || /bin/echo -n "$? Files Different"; /bin/echo; done
+
+# diff SANDISK32G, delete same file
+cd /Volumes/SANDISK32G/DCIM/100CANON/
+SRC_DIR=/Volumes/SANDISK32G/DCIM/100CANON
+DST_DIR=/Volumes/Public/Shared_Pictures/Canon650
+for i in $(ls MVI_*.MOV); do /bin/ls -l $SRC_DIR/${i} $DST_DIR/${i}; /usr/bin/diff $SRC_DIR/${i} $DST_DIR/${i} > /dev/null 2>&1 && /bin/echo -n "Same, Same - Deleting $SRC_DIR/${i}" && rm $SRC_DIR/${i} || /bin/echo -n " - $? Files Different"; /bin/echo ; done
